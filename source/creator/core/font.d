@@ -42,6 +42,7 @@ private {
     ubyte[] NOTO = cast(ubyte[])import("NotoSans-Regular.ttf");
     ubyte[] NOTO_CJK = cast(ubyte[])import("NotoSansCJK-Regular.ttc");
     ubyte[] ICONS = cast(ubyte[])import("MaterialIcons.ttf");
+    ubyte[] ATKINSON = cast(ubyte[])import("AtkinsonHyperlegible-Regular.ttf");
 }
 
 /**
@@ -70,14 +71,8 @@ struct FontEntry {
 void incInitFonts() {
     _incInitFontList();
     atlas = igGetIO().Fonts;
-        if (incSettingsGet!bool("useOpenDyslexic")) {
 
-            // Use OpenDyslexic for Latin
-            _incAddFontData("APP\0", OPEN_DYSLEXIC, 24, (cast(ImWchar[])[
-                0x0020, 0x024F, // Basic Latin + Latin Supplement & Extended
-                0]).ptr,
-                ImVec2(0, -8)
-            );
+        if (incSettingsGet!int("useFont") == 1 || incSettingsGet!int("useFont") == 2) {
 
             // Everything else will have to be NOTO
             _incAddFontData("APP\0", NOTO, 26, (cast(ImWchar[])[
@@ -89,7 +84,27 @@ void incInitFonts() {
                 0]).ptr,
                 ImVec2(0, -6)
             );
+        }
+        if (incSettingsGet!int("useFont") == 2) {
+
+            // Use OpenDyslexic for Latin
+            _incAddFontData("APP\0", OPEN_DYSLEXIC, 24, (cast(ImWchar[])[
+                0x0020, 0x024F, // Basic Latin + Latin Supplement & Extended
+                0]).ptr,
+                ImVec2(0, -8)
+            );
+
+        } else if (incSettingsGet!int("useFont") == 1) {
+
+            // Use Atkinson Hyperlegible for Latin
+            _incAddFontData("APP\0", ATKINSON, 28, (cast(ImWchar[])[
+                0x0020, 0x024F, // Basic Latin + Latin Supplement & Extended
+                0]).ptr,
+                ImVec2(0, -6)
+            );
+
         } else {
+            incSettingsSet("useFont", 0);
             _incAddFontData("APP\0", NOTO, 26, (cast(ImWchar[])[
                 0x0020, 0x024F, // Basic Latin + Latin Supplement & Extended
                 0x0250, 0x036F, // IPA Extensions + Spacings + Diacritical Marks

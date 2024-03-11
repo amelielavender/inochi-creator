@@ -27,7 +27,7 @@ configuration "barebones" {
 	dependency "dportals" version="~>0.1.0"
 	targetType "executable"
 	subConfiguration "i2d-imgui" "static_dynamicCRT"
-	copyFiles "res/NotoSansCJK-Regular-LICENSE" "res/MaterialIcons-LICENSE" "res/OpenDyslexic-LICENSE" "LICENSE"
+	copyFiles "res/AtkinsonHyperlegible-LICENSE" "res/NotoSansCJK-Regular-LICENSE" "res/MaterialIcons-LICENSE" "res/OpenDyslexic-LICENSE" "LICENSE"
 }
 
 // Metadata generation

@@ -160,13 +160,27 @@ protected:
                         }
                         break;
                     case SettingsPane.Accessibility:
-                        beginSection(__("Accessibility"));
-                            bool disableCompositor = incSettingsGet!bool("useOpenDyslexic");
-                            if (igCheckbox(__("Use OpenDyslexic Font"), &disableCompositor)) {
-                                incSettingsSet("useOpenDyslexic", disableCompositor);
-                                changesRequiresRestart = true;
-                            }
-                            incTooltip(_("Use the OpenDyslexic font for Latin text characters."));
+
+
+                        beginSection(__("Fonts"));
+                        
+                        int appFont = incSettingsGet!int("useFont");
+
+                        if (igRadioButton(__("Use the default font (Noto Sans)"), &appFont, 0)) {
+                            incSettingsSet("useFont", 0);
+                            changesRequiresRestart = true;
+                        }
+
+                        if (igRadioButton(__("Use Atkinson Hyperlegible Font"), &appFont, 1)) {
+                            incSettingsSet("useFont", 1);
+                            changesRequiresRestart = true;
+                        }
+
+                        if (igRadioButton(__("Use OpenDyslexic Font"), &appFont, 2)) {
+                            incSettingsSet("useFont", 2);
+                            changesRequiresRestart = true;
+                        }                                
+
                         endSection();
                         break;
                     case SettingsPane.Autosaves:
